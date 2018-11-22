@@ -14,15 +14,25 @@
   </head>
   <body>
     <div class="container-fluid d-flex justify-content-center">
-      <input type="text" id="input" /> <button id="button">Search</button>
-      <button id="city">Image</button>
+      <div class="card" style="width: 18rem;">
+        <img id="weatherImage" class="card-img-top" />
+        <div class="card-body">
+          <h5 id="cardTitle" class="card-title">How Cold Is It?</h5>
+          <p id="cardText" class="card-text"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Enter a City:</li>
+          <li class="list-group-item">
+            <div class="container-fluid d-flex justify-content-center">
+              <input type="text" id="input" />
+              <button onclick="getWeather(); searchImage()" id="button">
+                Search
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="container-fluid d-flex justify-content-center">
-      <div id="output"></div>
-    </div>
-
-    <div id="imageContainer" class="card" style="width: 18rem;"></div>
-
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,7 +1,6 @@
 let key = "480216db1042a479cc20fbf624a3e622";
-let button = document.getElementById("button");
-
-button.addEventListener("click", getWeather);
+// let button = document.getElementById("button");
+// button.addEventListener("click", getWeather, searchImage);
 
 function getWeather() {
   let cityInput = document.getElementById("input").value;
@@ -11,12 +10,21 @@ function getWeather() {
       return response.json();
     })
     .then(function(data) {
-      let output = document.getElementById("output");
       let celsius = convertKelvin(data.main.temp);
+      let celsiusMax = convertKelvin(data.main.temp_max);
+      let celsiusMin = convertKelvin(data.main.temp_min);
       let weatherIcon = data.weather["0"].icon;
       let cityName = data.name;
+      let country = data.sys.country;
 
-      renderOutput(output, celsius, weatherIcon, cityName);
+      renderOutput(
+        celsius,
+        weatherIcon,
+        cityName,
+        celsiusMax,
+        celsiusMin,
+        country
+      );
     })
     .catch(function() {
       console.log("error");
@@ -28,12 +36,30 @@ function convertKelvin(kelvin) {
   return Math.floor(temp);
 }
 
-function renderOutput(container, celsius, weatherIcon, city) {
-  container.innerHTML = `<img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather in ${city}"> The temperature in ${city} is currently ${celsius}°C.`;
+function renderOutput(celsius, weatherIcon, city, max, min, country) {
+  let title = document.getElementById("cardTitle");
+  let cardText = document.getElementById("cardText");
+  title.innerHTML = `<img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather in ${city}"> ${city}, ${country}`;
+  cardText.innerHTML = `
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Current</th>
+      <th scope="col">Max.</th>
+      <th scope="col">Min.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${celsius}°C</td>
+      <td>${max}°C</td>
+      <td>${min}°C</td>
+    </tr>`;
+  //   container.innerHTML = `<img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather in ${city}"> The temperature in ${city} is currently ${celsius}°C.`;
 }
 
-let citySearch = document.getElementById("city");
-citySearch.addEventListener("click", searchImage);
+// let citySearch = document.getElementById("city");
+// citySearch.addEventListener("click", searchImage);
 
 function searchImage() {
   fetch("https://api.teleport.org/api/urban_areas/?embed=ua:item/ua:images")
@@ -58,8 +84,6 @@ function searchImage() {
 }
 
 function renderImage(url) {
-  let container = document.getElementById("imageContainer");
-  let image = document.createElement("div");
-  container.appendChild(image);
-  image.innerHTML = `<img class="card-img-top" src="${url}" alt="Card image cap" />`;
+  let image = document.getElementById("weatherImage");
+  image.src = url;
 }
