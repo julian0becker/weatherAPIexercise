@@ -11,6 +11,12 @@
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous"
     />
+
+    <style>
+      body {
+        background-color: rgb(27, 26, 26);
+      }
+    </style>
   </head>
   <body>
     <div class="container-fluid d-flex justify-content-center">
@@ -25,7 +31,11 @@
           <li class="list-group-item">
             <div class="container-fluid d-flex justify-content-center">
               <input type="text" id="input" />
-              <button onclick="getWeather(); searchImage()" id="button">
+              <button
+                class="btn btn-dark"
+                onclick="getWeather(); searchImage()"
+                id="button"
+              >
                 Search
               </button>
             </div>

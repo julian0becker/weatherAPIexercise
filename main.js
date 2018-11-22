@@ -1,6 +1,4 @@
 let key = "480216db1042a479cc20fbf624a3e622";
-// let button = document.getElementById("button");
-// button.addEventListener("click", getWeather, searchImage);
 
 function getWeather() {
   let cityInput = document.getElementById("input").value;
@@ -27,7 +25,7 @@ function getWeather() {
       );
     })
     .catch(function() {
-      console.log("error");
+      console.log("error getWeather");
     });
 }
 
@@ -55,11 +53,7 @@ function renderOutput(celsius, weatherIcon, city, max, min, country) {
       <td>${max}°C</td>
       <td>${min}°C</td>
     </tr>`;
-  //   container.innerHTML = `<img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather in ${city}"> The temperature in ${city} is currently ${celsius}°C.`;
 }
-
-// let citySearch = document.getElementById("city");
-// citySearch.addEventListener("click", searchImage);
 
 function searchImage() {
   fetch("https://api.teleport.org/api/urban_areas/?embed=ua:item/ua:images")
@@ -78,8 +72,10 @@ function searchImage() {
           }
         }
       };
-      console.log(url());
       renderImage(url());
+    })
+    .catch(function() {
+      console.log("error searchImage");
     });
 }
 
