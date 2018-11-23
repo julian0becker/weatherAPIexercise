@@ -61,7 +61,8 @@ function searchImage() {
       return response.json();
     })
     .then(function(data) {
-      let cityInput = document.getElementById("input").value;
+      let city = document.getElementById("input").value;
+      let cityInput = capitalizeFirst(city);
 
       let url = function() {
         for (i = 0; i < data["_embedded"]["ua:item"].length; i++) {
@@ -82,4 +83,13 @@ function searchImage() {
 function renderImage(url) {
   let image = document.getElementById("weatherImage");
   image.src = url;
+}
+
+function capitalizeFirst(string) {
+  var splitStr = string.toLowerCase().split(" ");
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] =
+      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+  return splitStr.join(" ");
 }
