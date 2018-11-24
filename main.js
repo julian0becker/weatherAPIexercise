@@ -14,6 +14,10 @@ function getWeather() {
       let weatherIcon = data.weather["0"].icon;
       let cityName = data.name;
       let country = data.sys.country;
+      let long = data.coord.lon;
+      let lat = data.coord.lat;
+
+      getTime(long, lat);
 
       renderOutput(
         celsius,
@@ -27,11 +31,6 @@ function getWeather() {
     .catch(function() {
       console.log("error getWeather");
     });
-}
-
-function convertKelvin(kelvin) {
-  let temp = kelvin - 273.15;
-  return Math.floor(temp);
 }
 
 function renderOutput(celsius, weatherIcon, city, max, min, country) {
@@ -80,9 +79,28 @@ function searchImage() {
     });
 }
 
+function getTime(long, lat) {
+  let timeKey = "O3S4EO9NZ20B";
+  fetch(
+    `https://api.timezonedb.com/v2.1/get-time-zone?key=${timeKey}&format=json&by=position&lat=${lat}&lng=${long}`
+  )
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      renderTime(data.formatted);
+    });
+}
+
 function renderImage(url) {
   let image = document.getElementById("weatherImage");
   image.src = url;
+}
+
+function renderTime(timeString) {
+  let timeBox = document.getElementById("time");
+  timeBox.classList.remove("hidden");
+  timeBox.innerText = timeString;
 }
 
 function capitalizeFirst(string) {
@@ -92,4 +110,9 @@ function capitalizeFirst(string) {
       splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
   }
   return splitStr.join(" ");
+}
+
+function convertKelvin(kelvin) {
+  let temp = kelvin - 273.15;
+  return Math.floor(temp);
 }

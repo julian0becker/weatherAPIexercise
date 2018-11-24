@@ -16,23 +16,45 @@
       body {
         background-color: rgb(27, 26, 26);
       }
+
+      #time {
+        background-color: rgb(27, 26, 26);
+        color: white;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #containsAll {
+        position: relative;
+      }
     </style>
   </head>
   <body>
-    <div class="container-fluid d-flex justify-content-center">
+    <div id="containsAll" class="container-fluid d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
-        <img id="weatherImage" class="card-img-top" />
+        <img
+          id="weatherImage"
+          class="card-img-top"
+          src="https://desenio.co.uk/bilder/artiklar/zoom/8450_1.jpg"
+        />
         <div class="card-body">
           <h5 id="cardTitle" class="card-title">How Cold Is It?</h5>
           <p id="cardText" class="card-text"></p>
         </div>
         <ul class="list-group list-group-flush">
+          <li class="list-group-item hidden" id="time"></li>
           <li class="list-group-item">
             <div class="container-fluid d-flex justify-content-center">
               <input type="text" id="input" placeholder="Enter a City" />
               <button
                 class="btn btn-dark"
-                onclick="getWeather(); searchImage()"
+                onclick="getWeather(); searchImage();"
                 id="button"
               >
                 Search
