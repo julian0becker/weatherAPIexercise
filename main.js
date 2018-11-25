@@ -3,7 +3,9 @@ let key = "480216db1042a479cc20fbf624a3e622";
 function getWeather() {
   let cityInput = document.getElementById("input").value;
   let city = cityInput.toLowerCase();
-  fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${key}`)
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${key}`
+  )
     .then(function(response) {
       return response.json();
     })
