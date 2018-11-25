@@ -94,7 +94,9 @@ function getTime(long, lat) {
     });
 }
 
-function renderImage(url) {
+function renderImage(
+  url = "https://www.stockvault.net/data/2012/08/03/133422/thumb16.jpg"
+) {
   let image = document.getElementById("weatherImage");
   image.src = url;
 }
