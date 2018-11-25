@@ -67,7 +67,7 @@ function searchImage() {
 
       let url = function() {
         for (i = 0; i < data["_embedded"]["ua:item"].length; i++) {
-          if (data["_embedded"]["ua:item"][i]["name"] == cityInput) {
+          if (data["_embedded"]["ua:item"][i]["name"] == cityInput.trim()) {
             return data["_embedded"]["ua:item"][i]["_embedded"]["ua:images"][
               "photos"
             ]["0"]["image"]["mobile"];
