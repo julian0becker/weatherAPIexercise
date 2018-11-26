@@ -35,7 +35,17 @@
       }
 
       #input {
-        width: 80%;
+        padding-right: 0.75rem;
+        width: 100%;
+      }
+
+      #inputContainer {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      #button {
+        margin-left: 1rem;
       }
     </style>
   </head>
@@ -48,13 +58,13 @@
           src="https://desenio.co.uk/bilder/artiklar/zoom/8450_1.jpg"
         />
         <div class="card-body">
-          <h5 id="cardTitle" class="card-title">How Cold Is It?</h5>
+          <h5 id="cardTitle" class="card-title">What's the temperature?</h5>
           <p id="cardText" class="card-text"></p>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item hidden" id="time"></li>
-          <li class="list-group-item">
-            <div class="container-fluid d-flex justify-content-around">
+          <li class="list-group-item" id="inputContainer">
+            <div class="container-fluid d-flex justify-content-start">
               <input type="text" id="input" placeholder="Enter a City" />
               <button
                 class="btn btn-dark"
