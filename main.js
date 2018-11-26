@@ -1,24 +1,31 @@
 let key = "480216db1042a479cc20fbf624a3e622";
 
-function getWeather() {
+async function getWeather() {
   let cityInput = document.getElementById("input").value;
   let city = cityInput.toLowerCase();
 
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${key}`
-  )
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      let celsius = convertKelvin(data.main.temp);
-      let celsiusMax = convertKelvin(data.main.temp_max);
-      let celsiusMin = convertKelvin(data.main.temp_min);
-      let weatherIcon = data.weather["0"].icon;
-      let cityName = data.name;
-      let country = data.sys.country;
-      let long = data.coord.lon;
-      let lat = data.coord.lat;
+  Promise.all([
+    $.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${key}`
+    ),
+    $.get(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&mode=json&APPID=${key}`
+    )
+  ])
+    .then(data => {
+      let currentWeather = data[0];
+      let forecast = data[1];
+
+      let celsius = convertKelvin(currentWeather.main.temp);
+      let weatherIcon = currentWeather.weather[0].icon;
+      let cityName = currentWeather.name;
+      let country = currentWeather.sys.country;
+      let long = currentWeather.coord.lon;
+      let lat = currentWeather.coord.lat;
+      let forecastTemp = convertKelvin(forecast.list[8].main.temp);
+      let forecastTemp48 = convertKelvin(forecast.list[16].main.temp);
+
+      console.log(data);
 
       getTime(long, lat);
 
@@ -26,17 +33,24 @@ function getWeather() {
         celsius,
         weatherIcon,
         cityName,
-        celsiusMax,
-        celsiusMin,
-        country
+        country,
+        forecastTemp,
+        forecastTemp48
       );
     })
-    .catch(function() {
-      console.log("error getWeather");
+    .catch(err => {
+      console.log(err);
     });
 }
 
-function renderOutput(celsius, weatherIcon, city, max, min, country) {
+function renderOutput(
+  celsius,
+  weatherIcon,
+  city,
+  country,
+  forecastTemperature,
+  forecastTemperature48
+) {
   let title = document.getElementById("cardTitle");
   let cardText = document.getElementById("cardText");
   title.innerHTML = `<img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather in ${city}"> ${city}, ${country}`;
@@ -45,15 +59,15 @@ function renderOutput(celsius, weatherIcon, city, max, min, country) {
   <thead class="thead-dark">
     <tr>
       <th scope="col">Current</th>
-      <th scope="col">Max.</th>
-      <th scope="col">Min.</th>
+      <th scope="col">in 24h</th>
+      <th scope="col">in 48h</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>${celsius}°C</td>
-      <td>${max}°C</td>
-      <td>${min}°C</td>
+      <td>${forecastTemperature}°C</td>
+      <td>${forecastTemperature48}°C</td>
     </tr>`;
 }
 
