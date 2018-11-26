@@ -3,6 +3,7 @@ let key = "480216db1042a479cc20fbf624a3e622";
 function getWeather() {
   let cityInput = document.getElementById("input").value;
   let city = cityInput.toLowerCase();
+
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${key}`
   )
@@ -64,7 +65,7 @@ function searchImage() {
     .then(function(data) {
       let city = document.getElementById("input").value;
       let cityInput = capitalizeFirst(city);
-
+      document.getElementById("input").value = "";
       let url = function() {
         for (i = 0; i < data["_embedded"]["ua:item"].length; i++) {
           if (data["_embedded"]["ua:item"][i]["name"] == cityInput.trim()) {
